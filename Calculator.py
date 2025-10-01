@@ -20,7 +20,7 @@ def convert_to_number(token):
 
 def is_operation(token):
     """Проверяет, является ли токен поддерживаемой операцией"""
-    return token in ['+', '-', '*', '/', '//', '**', '%']
+    return token in ['+', '-', '*', '/', '//', '**', '%', '^']
 
 
 def calculating_the_expression(expression):
@@ -46,7 +46,7 @@ def calculating_the_expression(expression):
             if counting_parentheses < 0:
                 sys.exit('Incorrect parenthesis syntax') # Проверка на лишние закрывающие скобки
             if len(stack) == 1:
-                Answer: stack.pop() # Извлекаем результат из подвыражения
+                result = stack.pop() # Извлекаем результат из подвыражения
                 stack = massif_of_massifs.pop()  # Восстанавливаем предыдущий стек
                 stack.append(result)  # Добавляем результат в основной стек
             else:
@@ -89,7 +89,7 @@ def writing_to_massif(stack, element):
             stack.append(element_1 / element_2)
         elif element == '//' and element_2 != 0 and element_2 == int(element_2) and element_1 == int(element_1):
             stack.append(element_1 // element_2)
-        elif element == '**':
+        elif element == '**' or element == '^':
             stack.append(element_1 ** element_2)
         elif element == '%' and element_2 != 0 and element_2 == int(element_2) and element_1 == int(element_1):
             stack.append(element_1 % element_2)
@@ -112,7 +112,7 @@ def print_welcome_message():
     print("ВОЗМОЖНОСТИ:")
     print("  1) Поддержка целых и вещественных чисел")
     print("  2) Арифметические операции: +, -, *, /, //, **, %")
-    print("  3) Работа с отрицательными и вещественными числами (например: -5, -3.14)")
+    print("  3) Работа с отрицательными числами (например: -5, -3.14)")
     print("  4) Вложенные скобки для группировки выражений")
     print("  5) Проверка ошибок: деление на ноль, неверный синтаксис")
 
@@ -143,4 +143,3 @@ def run_calculator():
 
 if __name__ == '__main__':
     run_calculator()
-
